@@ -8,7 +8,7 @@ import "element-plus/dist/index.css"
 // 引入windi
 import 'virtual:windi.css'
 // router
-import router from './router'
+import {router} from '~/router'
 
 
 

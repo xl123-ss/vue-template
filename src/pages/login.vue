@@ -35,7 +35,7 @@
                         </el-input>
                     </el-form-item>
                     <!-- 绑定点击事件 -->
-                    <el-button type="primary" class="w-80" @click="onSubmit">登 录</el-button>
+                    <el-button type="primary" class="w-80" @click="onSubmit" :loading="loading">登 录</el-button>
                 </el-form>
             </el-col>
         </el-row>
@@ -44,7 +44,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue';
-import { adminLogin } from '~/api/admin'
+// import { adminLogin } from '~/api/admin'
 // 消息提示组件
 import { ElNotification } from 'element-plus'
 import router from '~/router'
@@ -52,13 +52,13 @@ import router from '~/router'
 // 引入useCookies
 import { useCookies } from '@vueuse/integrations/useCookies'
 // 提示组件
-import { toast } from '~/utils/toast'
+import { toast } from '~/composables/util'
 
-import { useAdmin } from '~/store'
-import { setToken } from '~/utils/token'
-const store = useAdmin()
+import { useAdminStore } from '~/store'
+import { setToken } from '~/composables/token'
+const store = useAdminStore()
 
-const { setStoreToken } = store
+const { setStoreToken, adminLogin } = store
 
 // 定义表单提交对象
 const form = reactive({
@@ -86,32 +86,30 @@ const onSubmit = () => {
     formRef.value.validate((valid) => {
         if (!valid) {
             // 校验失败
-            return
+            return false;
         }
         // 开始加载
         loading.value = true
-        adminLogin(form.username, form.password)
-            .then((res) => {
-            if (res.code === 200) {
-                // 将登录成功返回 token 存入 cookie
 
-                setToken(res.data.token)
-                setStoreToken(res.data.token)
-                toast(res.msg)
-                router.push('/')
-            } else {
-                toast(res.msg || '登录失败', 'error')
-            }
+        setTimeout(() => {
+            adminLogin(form.username, form.password)
+                .then((res) => {
 
-        })
-        .finally(() => {
-            // 加载结束
-            loading.value = false
-        })
-
+                    if (res.code === 1) {
+                        toast(res.msg)
+                        router.push("/")
+                    }else{
+                        toast(res.msg,"error")
+                    }
+                    // 加载结束
+                    loading.value = false
+                })
+        }, 1000)
 
     })
 }
+
+
 </script>
 
 <style scoped>

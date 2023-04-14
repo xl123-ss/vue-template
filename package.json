@@ -19,7 +19,9 @@
     "@vueuse/integrations": "^9.13.0",
     "universal-cookie": "^4.0.4",
 
-    "pinia": "^2.0.34"
+    "pinia": "^2.0.34",
+
+    "nprogress": "^0.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",

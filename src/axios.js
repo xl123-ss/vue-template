@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { getToken } from '~/utils/token.js'
+import { getToken } from '~/composables/token.js'
 import { ElNotification } from 'element-plus'
-import { toast } from '~/utils/toast'
+import { toast } from '~/composables/util'
 
 // 创建请求实例
 const instance = axios.create({

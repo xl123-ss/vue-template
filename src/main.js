@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import './style.css'
+// import './style.css'
 import App from './App.vue'
 // 引入element-plus组件
 import Element from 'element-plus'
@@ -11,7 +11,11 @@ import 'virtual:windi.css'
 import router from './router'
 
 
+
 import './permission'
+
+//进度条
+import "nprogress/nprogress.css"
 const  app = createApp(App)
 //使用element-plus组件
 app.use(Element)
